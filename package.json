@@ -1,0 +1,19 @@
+{
+  "name": "express-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "none"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brandon-wever/express-server.git"
+  },
+  "keywords": [
+    "express",
+    "js"
+  ],
+  "author": "Brandon Wever",
+  "license": "ISC"
+}
