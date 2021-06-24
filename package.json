@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "none"
+    "test": "",
+    "build": "node server.js",
+    "build:watch" : "nodemon ."
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,11 @@
     "js"
   ],
   "author": "Brandon Wever",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
