@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "",
-    "build": "node server.js",
-    "build:watch" : "nodemon ."
+    "build": "node src/server.js",
+    "build:watch" : "nodemon src/server.js"
   },
   "repository": {
     "type": "git",
