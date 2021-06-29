@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+require('../db/config.js');
 
 // Adding middleware
 app.use(express.json());
