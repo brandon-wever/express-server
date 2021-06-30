@@ -11,6 +11,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/register/", require("./routes/register"))
+app.use("/api/auth/", require("./routes/auth"))
 
 // GET (retrieving data), PUT (updating something in the db), POST (creating in db), DEL (removing data - db)
 
