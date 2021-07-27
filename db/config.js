@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uri = `mongodb+srv://atlasAdmin:R6NpNDRHq74RmqN@cluster0.a8dgx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`; // connection string to database
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER_NAME}.a8dgx.mongodb.net/${process.env.DB_DATABASE_NAME}?retryWrites=true&w=majority`; // connection string to database
 
 mongoose.connect(uri, 
     {
