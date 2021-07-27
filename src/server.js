@@ -21,3 +21,5 @@ app.use("/api/auth/", require("./routes/auth"));
 app.listen(port, () => {
     console.log(`listening at http://${hostName}:${port}`);
 });
+
+module.exports = app;
