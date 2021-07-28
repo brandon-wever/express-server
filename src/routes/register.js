@@ -11,8 +11,6 @@ router.post("/", async (req, res, next) => {
         const savedUser = await user.save();
         res.json(savedUser);
     } catch (error) {
-        //next(error)
-        //console.log(error);
         res.status(500).json({ msg: 'Internal server error' });
     }
 });
