@@ -1,8 +1,6 @@
 const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const UserModel = require('../../db/models/User');
-const JWTstrategy = require('passport-jwt').Strategy;
-const ExtractJWT = require('passport-jwt').ExtractJwt;
 const bcrypt = require('bcryptjs');
 
 passport.use(
@@ -20,14 +18,14 @@ passport.use(
                     return done(null, false, { message: 'User not found' });
                 }
 
-
-                if (await bcrypt.compare(password, user.password)) {
+                const isValid = await bcrypt.compare(password, user.password);
+                if (isValid) {
                     return done(null, user, {
-                        message: 'Logged in Successfully'
+                        message: 'Logged in successfully'
                     });
                 } else {
                     return done(null, false, {
-                        message: 'Wrong Password'
+                        message: 'Wrong password'
                     });
                 }
             } catch (error) {

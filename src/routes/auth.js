@@ -3,39 +3,33 @@ const _ = require('underscore');
 const bcrypt = require('bcryptjs');
 const UserModel = require("../../db/models/User");
 const router = express.Router();
+const passport = require('passport');
+const jwt = require('jsonwebtoken');
+require('../config/auth');
 
 // POST Login
-router.post("/login", async (req, res) => {
-    
-    try{
-        // Validate that email and password exist
-        if(req.body.email === null || req.body.password === null){
-            throw new Error('User email or password not defined.')
+router.post("/login", async (req, res, next) => {
+    passport.authenticate('login', async (error, user, msg) => {
+        try {
+            if (error || !user) {
+                return next(new Error('User is not valid'));
+            }
+
+            // Valid user
+            req.login(user, { session: false }, async (er) => {
+                if (er) {
+                    return next(er);
+                }
+
+                console.log(process.env.JWT_SECRET);
+                const body = { _id: user._id, email: user.email };
+                const token = jwt.sign({ user: body }, process.env.JWT_SECRET);
+                res.json({token: token});
+            });
+        } catch (err) {
+            return next(error);
         }
-
-        // Grab all users with matching email
-        const users = await UserModel.find({ email: req.body.email});
-
-        // Extract one user that has same email
-        const user = _.find(users, (foundUser) => foundUser.email === req.body.email);
-
-        if (!user) {
-            throw new Error(`User with email ${req.body.email} does not exist.`);
-        }
-
-        // Bcryptjs: Compare body password with user password
-        // req.body.password IS NOT HASHED
-        // user.password IS HASHED
-        if (await bcrypt.compare(req.body.password, user.password)) {
-            res.json(user);
-        } else {
-            res.sendStatus(401); // 401 means unathorized login
-        }
-    }
-    catch(error){
-        console.log(error);
-        res.sendStatus(500);
-    }
+    })(req, res, next);
 });
 
 // TODO: Forgot Password
