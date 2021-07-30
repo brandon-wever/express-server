@@ -7,19 +7,10 @@ const hostName = process.env.HOST_NAME;
 const moment = require('moment');
 
 const logRequestBody = (req, res, next) => {
-    console.log(`Request incoming at ${moment().format('MM/DD/YYYY HH:mm:ss')}: ${JSON.stringify(req.body)}`);
-    next();
-};
-
-const isValidBody = (req, res, next) => {
-    if (!req.body.token) {
-        next(new Error('Has no token on body'));
-        console.log('Invalid request');
-    } else {
-
-        console.log('Valid request');
-        next();
+    if (process.env.NODE_ENV !== 'test') {
+        console.log(`Request incoming at ${moment().format('MM/DD/YYYY HH:mm:ss')}: ${JSON.stringify(req.body)}`);
     }
+    next();
 };
 
 // Adding middleware

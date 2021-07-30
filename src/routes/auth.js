@@ -11,8 +11,12 @@ require('../config/auth');
 router.post("/login", async (req, res, next) => {
     passport.authenticate('login', async (error, user, msg) => {
         try {
-            if (error || !user) {
-                return next(new Error('User is not valid'));
+            if (error) {
+                return res.sendStatus(500);
+            }
+
+            if (!user) {
+                return res.sendStatus(401); // Unathorized login, passwords do not match
             }
 
             // Valid user
@@ -21,7 +25,6 @@ router.post("/login", async (req, res, next) => {
                     return next(er);
                 }
 
-                console.log(process.env.JWT_SECRET);
                 const body = { _id: user._id, email: user.email };
                 const token = jwt.sign({ user: body }, process.env.JWT_SECRET);
                 res.json({token: token});
