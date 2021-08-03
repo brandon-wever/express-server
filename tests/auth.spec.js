@@ -9,7 +9,7 @@ const _ = require('underscore');
 const jwt = require('jsonwebtoken');
 const { response } = require('../src/server');
 
-describe.only('API Auth', () => {
+describe('API Auth', () => {
     let users = [];
 
     async function registerNewUser() {
@@ -26,7 +26,7 @@ describe.only('API Auth', () => {
         return body;
     }
 
-    describe(`POST ${ROUTE_PATH}/login`,() => {
+    describe(`POST ${ROUTE_PATH}login`,() => {
         const path = `${ROUTE_PATH}/login`;
         let body = { email: null, password: null };
         let user;
