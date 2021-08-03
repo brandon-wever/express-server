@@ -5,6 +5,7 @@ require('../db/config.js');
 const port = process.env.HOST_PORT;
 const hostName = process.env.HOST_NAME;
 const moment = require('moment');
+const passport = require('passport');
 
 const logRequestBody = (req, res, next) => {
     if (process.env.NODE_ENV !== 'test') {
@@ -25,6 +26,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/register/", require("./routes/register"));
 app.use("/api/auth/", require("./routes/auth"));
+app.use("/api/profile/", passport.authenticate('jwt', { session: false }), require("./routes/profile"));
+
 
 // GET (retrieving data), PUT (updating something in the db), POST (creating in db), DEL (removing data - db)
 

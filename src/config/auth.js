@@ -2,6 +2,8 @@ const passport = require('passport');
 const localStrategy = require('passport-local').Strategy;
 const UserModel = require('../../db/models/User');
 const bcrypt = require('bcryptjs');
+const JWTstrategy = require('passport-jwt').Strategy;
+const ExtractJWT = require('passport-jwt').ExtractJwt;
 
 passport.use(
     'login',
@@ -30,6 +32,27 @@ passport.use(
                 }
             } catch (error) {
                 return done(error);
+            }
+        }
+    )
+);
+
+// Verify a JWT token
+// Documentation: http://www.passportjs.org/packages/passport-jwt/
+passport.use(
+    new JWTstrategy(
+        { secretOrKey: process.env.JWT_SECRET, jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken() },
+        async (jwtPayload, done) => {
+            try {
+                const user = await UserModel.findById(jwtPayload.user._id);
+                if (user) {
+                    done(null, true);
+                } else {
+                    done(null, false);
+                }
+            } catch (error) {
+                console.log(error);
+                done(error, false);
             }
         }
     )
