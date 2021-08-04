@@ -30,7 +30,8 @@ router.post("/login", async (req, res, next) => {
                 res.json({token: token});
             });
         } catch (err) {
-            return next(error);
+            console.error(err)
+            return next(err);
         }
     })(req, res, next);
 });

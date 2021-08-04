@@ -13,7 +13,7 @@ describe('API Auth', () => {
     let users = [];
 
     async function registerNewUser() {
-        const body = { email: `test-${moment().unix() + users.length}@please-remove.com`, password: `${moment().unix()}`};
+        const body = { email: `test-${moment().unix() + users.length + _.random(10_000)}@please-remove.com`, password: `${moment().unix()}`};
 
         const response = await request(server).post(REGISTER_ROUTE_PATH).send(body);
         const user = await UserModel.findOne({ email: body.email });
