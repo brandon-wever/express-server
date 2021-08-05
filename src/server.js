@@ -6,6 +6,7 @@ const port = process.env.HOST_PORT;
 const hostName = process.env.HOST_NAME;
 const moment = require('moment');
 const passport = require('passport');
+const cors = require('cors');
 
 const logRequestBody = (req, res, next) => {
     if (process.env.NODE_ENV !== 'test') {
@@ -16,6 +17,7 @@ const logRequestBody = (req, res, next) => {
 
 // Adding middleware
 app.use(express.json());
+app.use(cors());
 app.use(logRequestBody);
 
 // Adding my routes
